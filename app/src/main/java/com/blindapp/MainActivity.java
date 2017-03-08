@@ -1,11 +1,11 @@
 package com.blindapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     GridView catGrid;
     ArrayList<GridModel> arrayList;
     GestureDetectorCompat detectorCompat;
+    CustomGridAdapter adapter;
+    int selectedPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         //category grid view
         catGrid = (GridView) findViewById(R.id.main_grid_view);
-        CustomGridAdapter adapter = new CustomGridAdapter(this,arrayList);
+        adapter = new CustomGridAdapter(this,arrayList);
         catGrid.setAdapter(adapter);
 //        catGrid
 //        catGrid.se
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 return detectorCompat.onTouchEvent(event);
             }
         });
-
-
+        selectedPosition = -1;
+        Log.d("myapp","init counter");
     }
 
     @Override
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             // bottom to top swipe
             else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE
                     && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                onBottonSwipe();
+                onDownSwipe();
                 return true;
             }
         } catch (Exception e) {
@@ -129,11 +131,44 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     private void onUpSwipe() {
-        Toast.makeText(this,"up swipe",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"up swipe",Toast.LENGTH_SHORT).show();
+        // check for current grid view selected position
+//        int position = catGrid.getSelectedItemPosition();
+        // increase counter till array list size
+        Log.d("myapp","org pos:"+selectedPosition);
+        if(selectedPosition > -1){
+            catGrid.getChildAt(selectedPosition).setBackgroundColor(Color.WHITE);
+            selectedPosition--;
+//            catGrid.setItemChecked(selectedPosition,true);
+            catGrid.getChildAt(selectedPosition).setBackgroundColor(Color.BLUE);
+            Log.d("myapp","selected position:"+selectedPosition);
+            View selectedChildView = catGrid.getSelectedView();
+            selectedChildView.setBackgroundColor(Color.BLUE);
+        }else{
+            Log.d("myapp","decreament complete");
+        }
     }
 
-    private void onBottonSwipe(){
-        Toast.makeText(this,"bottom swipe",Toast.LENGTH_SHORT).show();
+    private void onDownSwipe(){
+//        Toast.makeText(this,"bottom swipe",Toast.LENGTH_SHORT).show();
+        // check for current grid view selected position
+//        int position = catGrid.getSelectedItemPosition();
+        // increase counter till array list size
+        Log.d("myapp","org pos:"+selectedPosition);
+        if(selectedPosition < arrayList.size()-1){
+//            catGrid.getChildAt(selectedPosition).setBackgroundColor(Color.WHITE);
+            selectedPosition = selectedPosition+1;
+            catGrid.getChildAt(selectedPosition).setBackgroundColor(Color.BLUE);
+            // if selected postion is greateer than 0 then use white color
+            if(selectedPosition > 0){
+                catGrid.getChildAt(selectedPosition-1).setBackgroundColor(Color.WHITE);
+            }
+            Log.d("myapp","selected position:"+selectedPosition);
+            View selectedChildView = catGrid.getSelectedView();
+            selectedChildView.setBackgroundColor(Color.BLUE);
+        }else{
+            Log.d("myapp","increment complete");
+        }
     }
 
     private void onRightSwipe() {
@@ -148,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 //        if(speakEnable) {
 //            speakOut("left swipe");
 //        }
+//        handleSelection()
     }
 
 
