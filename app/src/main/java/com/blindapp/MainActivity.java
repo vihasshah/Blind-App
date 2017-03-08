@@ -39,17 +39,20 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         setDefaultData();
 
         //category grid view
-//        catGrid = (GridView) findViewById(R.id.main_grid_view);
-//        CustomGridAdapter adapter = new CustomGridAdapter(this,arrayList);
-//        catGrid.setAdapter(adapter);
-//        catGrid.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                // true will disable touch events
-//                // false will work normally
-//                return true;
-//            }
-//        });
+        catGrid = (GridView) findViewById(R.id.main_grid_view);
+        CustomGridAdapter adapter = new CustomGridAdapter(this,arrayList);
+        catGrid.setAdapter(adapter);
+//        catGrid
+//        catGrid.se
+        catGrid.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // true will disable touch events
+                // false will work normally
+                return detectorCompat.onTouchEvent(event);
+            }
+        });
+
 
     }
 
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onDown(MotionEvent e) {
-        return false;
+        return true;
     }
 
     @Override
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+        return true;
     }
 
     @Override

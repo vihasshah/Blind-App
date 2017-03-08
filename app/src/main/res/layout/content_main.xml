@@ -6,14 +6,15 @@
     android:orientation="vertical"
     tools:context="com.blindapp.MainActivity"
     tools:showIn="@layout/activity_main"
+    android:id="@+id/main_grid_container"
     android:layout_marginTop="?actionBarSize">
 
 
-    <!--<GridView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/main_grid_view"-->
-        <!--android:numColumns="2"-->
-        <!--android:stretchMode="columnWidth" />-->
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_grid_view"
+        android:numColumns="2"
+        android:stretchMode="columnWidth" />
 
 </LinearLayout>
